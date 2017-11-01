@@ -1,0 +1,30 @@
+
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+
+    .myButton {
+    	margin-right: 4px;
+    	margin-bottom: 2px;
+     
+    }
+
+    .myFooter {
+
+    }
+
+    .myTinyImage {
+        /*height: 14px;*/
+   /*     width: 18px;*/
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 0px;
+        vertical-align: text-top;
+    }
+
+    #mySignature {
+        font-size: 1.1em;
+    }
