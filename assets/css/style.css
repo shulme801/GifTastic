@@ -28,3 +28,54 @@
     #mySignature {
         font-size: 1.1em;
     }
+
+    /* media queries for responsive text in footer*/
+
+    /*phone only*/
+    @media only screen and (max-width: 599px) {
+        #mySignature {
+            font-size: .5em;
+            /*height: 50px;*/
+            margin-bottom: 0px;
+
+        }
+        .myCopyright {
+            min-height: 20px !important;
+            position: relative;
+            top: 10px;
+        }
+        .myTinyImage {
+            display: none;
+        }
+        .myFooter{
+            height: 75px;
+            min-height: 0px !important;
+        }
+
+    }
+
+    /*tablets, desktop*/
+    @media only screen and (min-width: 1024px) {
+        
+
+        #mySignature {
+        font-size: 1.1em;
+         }
+
+        .myCopyright {
+            min-height: 20px !important;
+            /*position: relative;
+            top: 10px;*/
+        }
+        .myTinyImage {
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 0px;
+            vertical-align: text-top;
+        }
+        .myFooter{
+            height: 75px;
+            min-height: 36px !important;
+        }
+
+    }
