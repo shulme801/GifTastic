@@ -1,14 +1,20 @@
 
-      button,
+    button,
     div,
     form,
     input {
       margin: 10px;
     }
 
+    h1, h2, h3, h4, h5, h6 {
+        color: teal;
+
+    }
+
     .myButton {
         margin-right: 2px;
         margin-bottom: 2px;
+        max-width: 220px;
      
     }
 
@@ -17,12 +23,13 @@
     }
 
     .myTinyImage {
-        /*height: 14px;*/
-   /*     width: 18px;*/
         margin-left: 5px;
         margin-right: 5px;
         margin-top: 0px;
         vertical-align: text-top;
+    }
+    .myCard {
+        min-height: 450px;
     }
 
     #mySignature {
@@ -35,7 +42,6 @@
     @media only screen and (max-width: 599px) {
         #mySignature {
             font-size: .5em;
-            /*height: 50px;*/
             margin-bottom: 0px;
 
         }
@@ -50,6 +56,9 @@
         .myFooter{
             height: 75px;
             min-height: 0px !important;
+        }
+        .myCard {
+            min-height: 300px;
         }
 
     }
@@ -76,6 +85,10 @@
         .myFooter{
             height: 75px;
             min-height: 36px !important;
+        }
+
+        .myCard {
+            min-height: 600px;
         }
 
     }
