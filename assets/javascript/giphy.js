@@ -46,7 +46,7 @@ function displayAnimalGifs() {
         }).done(function(response) {
             console.log(response);
             var results = response.data;
-            console.log("Length of results array is "+results.length);
+            // console.log("Length of results array is "+results.length);
             for (var i = 0; i < results.length; i++) {
 
                 var rating = results[i].rating;
@@ -85,9 +85,9 @@ function displayAnimalGifs() {
   // Next is the logic to display GIFs when an animal button is clicked
   $(document).on("click", ".animals", displayAnimalGifs);
 
-  //The following logic toggles the data-state of the clicked gif
+  //The following logic toggles the data-state of the clicked gif -- Thanks Michael Ashe!!
   $(document).on("click", ".gif", function() {
-        console.log("GIF was clicked!");
+        // console.log("GIF was clicked!");
         var state = $(this).attr("data-state");
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
