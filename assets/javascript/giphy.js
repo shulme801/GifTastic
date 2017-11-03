@@ -34,6 +34,8 @@ function presentAnimalButtons () {
         
 }
 
+// displayAnimalGifs does the "heavy lifting" to do the AJAX call to the GIPHY db and then
+// process and display the results.
 function displayAnimalGifs() {
         var thisAnimal = $(this).attr("animal-name");
         var queryURL = myQuery1 + thisAnimal + myQuery2;
@@ -44,39 +46,59 @@ function displayAnimalGifs() {
         }).done(function(response) {
             console.log(response);
             var results = response.data;
+            console.log("Length of results array is "+results.length);
             for (var i = 0; i < results.length; i++) {
 
-                var animalGifDiv = $("<div>");
-                var p = $("<p>").text("Rating: " + results[i].rating);
-                var animalImage = $("<img>");
-                animalImage.attr("src", results[i].images.fixed_height_still.url);
-                animalImage.attr("data-still", results[i].images.fixed_height_still.url);
-                animalImage.attr("data-animate", results[i].images.fixed_height.url);
-                animalImage.attr("data-state", "still");
-                animalImage.attr("class", "gif");
-                animalGifDiv.prepend(p);
-                animalGifDiv.prepend(animalImage);
-                $("#animalGifs").prepend(animalGifDiv);
+                var rating = results[i].rating;
+                // Check the rating -- we're only going to display "p" or "pg" rated gifs
+                if (rating === "p" || rating === "pg") {
+                  var animalGifDiv = $("<div>");
+                  var p = $("<p>").text("Rating: " + results[i].rating);
+                  var animalImage = $("<img>");
+                  animalImage.attr("src", results[i].images.fixed_height_still.url);
+                  animalImage.attr("data-still", results[i].images.fixed_height_still.url);
+                  animalImage.attr("data-animate", results[i].images.fixed_height.url);
+                  animalImage.attr("data-state", "still");
+                  animalImage.attr("class", "gif");
+                  animalGifDiv.prepend(p);
+                  animalGifDiv.prepend(animalImage);
+                  $("#animalGifs").prepend(animalGifDiv);
+                }
             }
         })
     };
 
-   // Performing our AJAX GET request
-  //  $.ajax({
-  //           url: myQuery,
-  //           method: "GET"
-  //         })
-  //         // After the data comes back from the API
-  //         .done(function(response) {
-  //           // Storing an array of results in the results variable
-  //           var results = response.data;
-  //           console.log("Response Data ",response.data);
-  // });
+// This function handles the click on the Submit button to add an animal
+    $("#addAnimal").on("click", function(event) {
+        event.preventDefault();
+        // This line grabs the input from the textbox
+        var newAnimal = $("#newAnimal").val().trim();
+        // Adding hero from the textbox to our array
+        animalButtons.push(newAnimal);
+        // Calling renderButtons which handles the processing of our hero array
+        presentAnimalButtons();
+    });
+   
 
-  presentAnimalButtons();
+
 
   // Next is the logic to display GIFs when an animal button is clicked
   $(document).on("click", ".animals", displayAnimalGifs);
 
+  //The following logic toggles the data-state of the clicked gif
+  $(document).on("click", ".gif", function() {
+        console.log("GIF was clicked!");
+        var state = $(this).attr("data-state");
+        if (state === "still") {
+            $(this).attr("src", $(this).attr("data-animate"));
+            $(this).attr("data-state", "animate");
+        } else {
+            $(this).attr("src", $(this).attr("data-still"));
+            $(this).attr("data-state", "still");
+        }
+    });
+
+// Get things going by calling presentAnimalButtons() to display the original Animals array
+  presentAnimalButtons();
 
 });
