@@ -1,8 +1,8 @@
 $(document).ready(function(){
 
-  var animalButtons = ["Dog","Cat","Elephant","Hamster","Gerbil","Horse","Otter","Cow"];
+  var animalButtons = ["Dog","Cat","Elephant","Hamster","Gerbil","Horse","Frog","Cow"];
 
- console.log("I got here")
+ // console.log("I got here")
 
  var myQuery1 = "https://api.giphy.com/v1/gifs/search?q=";
  var myQuery2 = "&api_key=KwfEioZVM2FKeKYifYLj9A1oI4aYYJWR&limit=10";
@@ -11,26 +11,28 @@ $(document).ready(function(){
 function presentAnimalButtons () {
   var i;
   var classesA="col s12 waves-effect waves-light btn myButton z-depth-1 animals";
-  var iTag = "<i class=\"material-icons left img-responsive\">add_a_photo</i>";
+  
   //Clear out any buttons that were on the page
   $("#animalButtons").empty();
 
   //Loop through the current array of animalButtons and generate a button for each animal
   for (i = 0; i < animalButtons.length; i++) {
-    var a = $("<a><i class=\"material-icons left img-responsive\">add_a_photo</i></a>");
+    var a = $("<button></button>");
     var idString = "animalButton"+i;
+    var iTag = $("<i></i>");
+    iTag.addClass("material-icons left img-responsive");
+    iTag.text("add_a_photo");
     // console.log("writing idString "+idString);
     a.attr("id", idString);
     a.attr("animal-name", animalButtons[i]);
     a.addClass(classesA);
-    
     a.text(animalButtons[i]);
+    a.append(iTag);
     $("#animalButtons").append(a);
 
-    // <a id="animalButton1" class="col s12 waves-effect waves-light btn myButton z-depth-1"><i class="material-icons left img-responsive">add_a_photo</i>Dog</a>
-                    
+            
   }
-  console.log("Animal Buttons div was initialized");
+  // console.log("Animal Buttons div was initialized");
         
 }
 
