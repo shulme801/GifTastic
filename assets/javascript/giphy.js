@@ -1,23 +1,37 @@
 $(document).ready(function(){
 
-  var animalButtons = ["Dog","Cat","Elephant","Hamster","Gerbil","Horse","Frog","Cow"];
 
- // console.log("I got here")
+//------------------------------------------------------------------------------------------
+// Global Vars
+//------------------------------------------------------------------------------------------
+  var animalButtons; // = ["Dog","Cat","Elephant","Hamster","Gerbil","Horse","Frog","Cow"];
+  var lastButton = 0; //Last button added
+  var myQuery1 = "https://api.giphy.com/v1/gifs/search?q=";
+  var myQuery2 = "&api_key=KwfEioZVM2FKeKYifYLj9A1oI4aYYJWR&limit=10";
 
- var myQuery1 = "https://api.giphy.com/v1/gifs/search?q=";
- var myQuery2 = "&api_key=KwfEioZVM2FKeKYifYLj9A1oI4aYYJWR&limit=10";
+//------------------------------------------------------------------------------------------
+// Utility Functions
+//------------------------------------------------------------------------------------------
+
 
 // Function to build the initial animal buttons
 function presentAnimalButtons () {
   var i;
   var classesA="col s12 waves-effect waves-light btn myButton z-depth-1 animals";
-  
+
   //Clear out any buttons that were on the page
   $("#animalButtons").empty();
 
+  var h = "Total Height: " + screen.height;
+  var w = "Total Width: " + screen.width;
+  console.log("Detected Screen Dimensions");
+  console.log(h);
+  console.log(w);
+
   //Loop through the current array of animalButtons and generate a button for each animal
   for (i = 0; i < animalButtons.length; i++) {
-    var a = $("<button></button>");
+    lastButton = i;
+    var a = $("<a></a>");
     var idString = "animalButton"+i;
     var iTag = $("<i></i>");
     iTag.addClass("material-icons left img-responsive");
@@ -26,13 +40,11 @@ function presentAnimalButtons () {
     a.attr("id", idString);
     a.attr("animal-name", animalButtons[i]);
     a.addClass(classesA);
+    // a.addClass(classesB);
     a.text(animalButtons[i]);
     a.append(iTag);
     $("#animalButtons").append(a);
-
-            
   }
-  // console.log("Animal Buttons div was initialized");
         
 }
 
@@ -47,9 +59,13 @@ function displayAnimalGifs() {
             method: "GET"
         }).done(function(response) {
             console.log(response);
-            var results = response.data;
-            // console.log("Length of results array is "+results.length);
-            for (var i = 0; i < results.length; i++) {
+            if (response.data.length === 0) {
+              console.log("No gifs found for "+thisAnimal);
+              Materialize.toast('Sorry, no GIFs found for this animal "'+thisAnimal+'"', 4000,'rounded grey lighten-3 teal-text');
+            } else {
+              var results = response.data;
+              // console.log("Length of results array is "+results.length);
+              for (var i = 0; i < results.length; i++) {
 
                 var rating = results[i].rating;
                 // Check the rating -- we're only going to display "p" or "pg" rated gifs
@@ -67,22 +83,55 @@ function displayAnimalGifs() {
                   $("#animalGifs").prepend(animalGifDiv);
                 }
             }
+            }
+            
         })
     };
 
-// This function handles the click on the Submit button to add an animal
-    $("#addAnimal").on("click", function(event) {
+    function resetGame() {
+      animalButtons = ["Dog","Cat","Elephant","Hamster","Gerbil","Horse","Frog","Cow"];
+      presentAnimalButtons();
+
+    }
+
+    //------------------------------------------------------------------------
+    // Event Handlers
+    //------------------------------------------------------------------------
+
+    // This function handles the click on the Submit button to add an animal
+    // $("#addAnimal").on("click", function(event) {
+    $("#newAnimalForm").submit(function() {
+  
         event.preventDefault();
         // This line grabs the input from the textbox
         var newAnimal = $("#newAnimal").val().trim();
-        // Adding hero from the textbox to our array
+        // Adding animal name from the textbox to our array
         animalButtons.push(newAnimal);
         // Calling renderButtons which handles the processing of our hero array
         presentAnimalButtons();
     });
-   
 
+    // The next function is a piece of magic from https://stackoverflow.com/questions/6364289/clear-form-fields-with-jquery
+    $(".reset").click(function() {
+        $("#newAnimalform").trigger('reset'); 
+    });
+  
+    // This function lets the user remove a button from the animalButtons div
+   $(document).on("click","#removeButton", function(){
+      
+      console.log("lastButton is "+lastButton);
+      if (lastButton < 0) {
+        lastButton = 0;
+      } else {
+        var buttonToRemove = "#animalButton"+lastButton;
+        animalButtons.pop(); 
+        $(buttonToRemove).remove();
+        lastButton--;
+      }
+      
 
+   });
+ 
 
   // Next is the logic to display GIFs when an animal button is clicked
   $(document).on("click", ".animals", displayAnimalGifs);
@@ -100,7 +149,15 @@ function displayAnimalGifs() {
         }
     });
 
-// Get things going by calling presentAnimalButtons() to display the original Animals array
-  presentAnimalButtons();
+  $(document).on("click","#resetGame", function() {
+    resetGame();
+  });
 
+
+
+// -------------------------------------------------------------------------------------------------
+// Code Execution Starts Here!
+// -------------------------------------------------------------------------------------------------
+// Get things going by calling resetGame() to display the original Animals array
+  resetGame();
 });
