@@ -27,9 +27,9 @@ function presentAnimalButtons () {
 
   var h = "Total Height: " + screen.height;
   var w = "Total Width: " + screen.width;
-  console.log("Detected Screen Dimensions");
-  console.log(h);
-  console.log(w);
+  // console.log("Detected Screen Dimensions");
+  // console.log(h);
+  // console.log(w);
 
   //Loop through the current array of animalButtons and generate a button for each animal
   for (i = 0; i < animalButtons.length; i++) {
@@ -84,7 +84,7 @@ function displayAnimalGifs() {
                 if (rating === "p" || rating === "pg") {
                   totalGifCount++;
                   gifCount++;
-                  console.log("totalGifCount is ",totalGifCount);
+                  // console.log("totalGifCount is ",totalGifCount);
                   var animalGifDiv = $("<div>");
                   var p = $("<p>").text("Rating: " + results[i].rating);
                   var animalImage = $("<img>");
@@ -107,7 +107,7 @@ function displayAnimalGifs() {
             //We know how many GIFs were in the last set of GIFs added. Save off that value 
             //so we can use it if user clicks the "Remove Last Gifs" button.
             lastGifsAdded.push(gifCount);
-            console.log("lastGifsAdded updated to ", gifCount);
+            // console.log("lastGifsAdded updated to ", gifCount);
     
           }
             
@@ -115,6 +115,8 @@ function displayAnimalGifs() {
     };
 
     function resetGame() {
+      // console.log("I got here!");
+      $("#animalGifs").empty();
       totalGifCount = 0;
       animalButtons = ["Dog","Cat","Elephant","Hamster","Gerbil","Horse","Frog","Cow"];
       presentAnimalButtons();
@@ -136,7 +138,7 @@ function displayAnimalGifs() {
         var newAnimal = $("#newAnimal").val().trim();
         // Adding animal name from the textbox to our array
         animalButtons.push(newAnimal);
-        // Calling renderButtons which handles the processing of our hero array
+        // Calling renderButtons which handles the processing of our gif array
         presentAnimalButtons();
     });
 
@@ -146,6 +148,8 @@ function displayAnimalGifs() {
     });
   
     // This function lets the user remove a button from the animalButtons div
+    // Nothing happens -- needs further debugging. Button turned off in index.html until
+    // I have a chance to debug.
    $(document).on("click","#removeButton", function(){
       
       console.log("lastButton is "+lastButton);
@@ -178,8 +182,8 @@ function displayAnimalGifs() {
         $(gifToRemove).remove();
         totalGifCount--;
       }
-      console.log("At end of removeGifs, totalGifCount is now ",totalGifCount);
-      console.log("And end of lastGifsAdded array is ",lastGifsAdded[lastGifsAdded.length-1]);
+      // console.log("At end of removeGifs, totalGifCount is now ",totalGifCount);
+      // console.log("And end of lastGifsAdded array is ",lastGifsAdded[lastGifsAdded.length-1]);
 
    });
  
