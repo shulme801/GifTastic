@@ -32,6 +32,10 @@
         min-height: 450px;
     }
 
+    .myCardContent {
+        padding:15px !important;
+    }
+
     #mySignature {
         font-size: 1.1em;
     }
@@ -88,7 +92,7 @@
         }
 
         .myCard {
-            min-height: 600px;
+            min-height: 730px;
         }
 
     }
