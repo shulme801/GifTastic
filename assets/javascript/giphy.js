@@ -11,11 +11,26 @@ $(document).ready(function(){
   var totalGifCount = 0;
   var lastGifsAdded = [];
   var gifLimit = 30;
+  var currentScreenHeight=0;
+  var currentScreenWidth=0;
+  var maxButtons = 6;
+  var maxGifs=9; //3 rows of 3
+
 
 //------------------------------------------------------------------------------------------
 // Utility Functions
 //------------------------------------------------------------------------------------------
 
+
+// Get current screen size so we can size areas of screen and know how many buttons and gifs 
+// can be displayed.
+function getScreenSize (height,width) {
+  heigth = "Total Height: " + screen.height;
+  width  = "Total Width: " + screen.width;
+  console.log("Detected Screen Dimensions");
+  console.log(h);
+  console.log(w);
+}
 
 // Function to build the initial animal buttons
 function presentAnimalButtons () {
@@ -24,12 +39,11 @@ function presentAnimalButtons () {
 
   //Clear out any buttons that were on the page
   $("#animalButtons").empty();
+  getScreenSize(currentScreenHeight,currentScreenWidth);
+  //each button is 220px wide and 35px high with 2px bottom margin in this release of GifTastic!
 
-  var h = "Total Height: " + screen.height;
-  var w = "Total Width: " + screen.width;
-  // console.log("Detected Screen Dimensions");
-  // console.log(h);
-  // console.log(w);
+
+  
 
   //Loop through the current array of animalButtons and generate a button for each animal
   for (i = 0; i < animalButtons.length; i++) {
@@ -98,6 +112,7 @@ function displayAnimalGifs() {
                   animalImage.attr("data-state", "still");
                   animalImage.attr("id", "gif"+totalGifCount);
                   animalImage.attr("class", "gif");
+                  animalImage.attr("class","myGif");
                   animalGifDiv.prepend(p);
                   animalGifDiv.prepend(animalImage);
                   $("#animalGifs").prepend(animalGifDiv);
